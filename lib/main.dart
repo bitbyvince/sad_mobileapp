@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sad_mobileapp/screens/login_screen.dart';
 import 'package:sad_mobileapp/screens/register_screen.dart';
 import 'package:sad_mobileapp/screens/home_screen.dart';
+import 'package:sad_mobileapp/screens/tabs/report_tab.dart';
 
 void main() {
   runApp(const MainApp());
@@ -27,6 +28,7 @@ class MainApp extends StatelessWidget {
             '/login': (context) => const LoginScreen(),
             '/register': (context) => const RegisterScreen(),
             '/home': (context) => const HomeScreen(),
+            '/report': (context) => const ReportTab(),
           },
         );
       },

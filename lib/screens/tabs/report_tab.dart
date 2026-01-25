@@ -37,6 +37,14 @@ class _ReportTabState extends State<ReportTab> {
     'Other',
   ];
 
+  final Map<String, bool> _activityLogs = {
+    'Used public transportation': true,
+    'Attended crowded indoor spaces': true,
+    'Close contact with someone showing respiratory symptoms': false,
+    'Outdoor activities with poor air quality': false,
+    'Recent travel': false,
+  };
+
   @override
   void dispose() {
     _locationController.dispose();
@@ -63,25 +71,47 @@ class _ReportTabState extends State<ReportTab> {
             child: SafeArea(
               bottom: false,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 24.h),
+                padding: EdgeInsets.fromLTRB(24.w, 16.h, 16.w, 24.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Report Health Risk',
-                      style: TextStyle(
-                        fontSize: 28.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      'Help protect your community',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        color: Colors.white.withOpacity(0.9),
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Report Health Risk',
+                                style: TextStyle(
+                                  fontSize: 28.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(height: 4.h),
+                              Text(
+                                'Help protect your community',
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  color: Colors.white.withOpacity(0.9),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: Colors.white,
+                            size: 24.sp,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context); // Exit action
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -348,6 +378,58 @@ class _ReportTabState extends State<ReportTab> {
                       );
                     },
                   ),
+                  SizedBox(height: 24.h),
+                  // Activity Logging Section
+                  Text(
+                    'Activity Logging (Last 7 Days)',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF1A1A1A),
+                    ),
+                  ),
+                  SizedBox(height: 12.h),
+
+                  Container(
+                    padding: EdgeInsets.all(16.w),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16.r),
+                      border: Border.all(color: const Color(0xFFE0E0E0)),
+                    ),
+                    child: Column(
+                      children: _activityLogs.entries.map((entry) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 12.h),
+                          child: Row(
+                            children: [
+                              Checkbox(
+                                value: entry.value,
+                                activeColor: const Color(
+                                  0xFF7E57C2,
+                                ), // purple like image
+                                onChanged: (value) {
+                                  setState(() {
+                                    _activityLogs[entry.key] = value ?? false;
+                                  });
+                                },
+                              ),
+                              Expanded(
+                                child: Text(
+                                  entry.key,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    color: const Color(0xFF1A1A1A),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+
                   SizedBox(height: 24.h),
                   // Additional Details Section
                   Text(

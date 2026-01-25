@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sad_mobileapp/screens/tabs/home_tab.dart';
 import 'package:sad_mobileapp/screens/tabs/map_tab.dart';
-import 'package:sad_mobileapp/screens/tabs/report_tab.dart';
 import 'package:sad_mobileapp/screens/tabs/status_tab.dart';
 import 'package:sad_mobileapp/screens/tabs/profile_tab.dart';
 
@@ -44,13 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _selectedIndex = index;
           });
         },
-        children: const [
-          HomeTab(),
-          MapTab(),
-          ReportTab(),
-          StatusTab(),
-          ProfileTab(),
-        ],
+        children: const [HomeTab(), MapTab(), StatusTab(), ProfileTab()],
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -86,22 +79,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () => _onItemTapped(1),
                 ),
                 _BottomNavItem(
-                  icon: Icons.description_outlined,
-                  label: 'Report',
+                  icon: Icons.checklist_outlined,
+                  label: 'Status',
                   isSelected: _selectedIndex == 2,
                   onTap: () => _onItemTapped(2),
                 ),
                 _BottomNavItem(
-                  icon: Icons.checklist_outlined,
-                  label: 'Status',
-                  isSelected: _selectedIndex == 3,
-                  onTap: () => _onItemTapped(3),
-                ),
-                _BottomNavItem(
                   icon: Icons.person_outline,
                   label: 'Profile',
-                  isSelected: _selectedIndex == 4,
-                  onTap: () => _onItemTapped(4),
+                  isSelected: _selectedIndex == 3,
+                  onTap: () => _onItemTapped(3),
                 ),
               ],
             ),

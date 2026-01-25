@@ -21,23 +21,69 @@ class ProfileTab extends StatelessWidget {
           child: SafeArea(
             bottom: false,
             child: Padding(
-              padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 24.h),
+              padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 32.h),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // Top row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Profile',
+                        style: TextStyle(
+                          fontSize: 22.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Container(
+                        width: 36.w,
+                        height: 36.w,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 24.h),
+
+                  // Avatar
+                  Container(
+                    width: 90.w,
+                    height: 90.w,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.person_outline,
+                      size: 42.sp,
+                      color: const Color(0xFF2196F3),
+                    ),
+                  ),
+
+                  SizedBox(height: 12.h),
+
+                  // Name
                   Text(
-                    'Profile & Settings',
+                    'Maria Santos',
                     style: TextStyle(
-                      fontSize: 28.sp,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
+
                   SizedBox(height: 4.h),
+
+                  // Member since
                   Text(
-                    'Manage your account',
+                    'Member since Jan 2026',
                     style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 14.sp,
                       color: Colors.white.withOpacity(0.9),
                     ),
                   ),
@@ -54,79 +100,83 @@ class ProfileTab extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Profile Card
+                SizedBox(height: 16.h),
+
                 Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(20.w),
+                  margin: EdgeInsets.symmetric(horizontal: 24.w),
+                  padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(16.r),
+                    borderRadius: BorderRadius.circular(20.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, 2),
+                        color: Colors.black.withOpacity(0.06),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
                       ),
                     ],
                   ),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Profile Avatar
-                      Container(
-                        width: 80.w,
-                        height: 80.w,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF2196F3),
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 3),
-                        ),
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.white,
-                          size: 40.sp,
+                      Text(
+                        'Activity Summary',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF1A1A1A),
                         ),
                       ),
-                      SizedBox(width: 16.w),
-                      // Name and Member Since
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Juan Dela Cruz',
+
+                      SizedBox(height: 16.h),
+
+                      // Stats row (stable layout)
+                      Row(
+                        children: [
+                          _activityStatCard(
+                            title: 'Alerts Viewed',
+                            value: '24',
+                            bgColor: const Color(0xFFE3F2FD),
+                            textColor: const Color(0xFF2196F3),
+                          ),
+                          SizedBox(width: 12.w),
+                          _activityStatCard(
+                            title: 'Reports Submitted',
+                            value: '3',
+                            bgColor: const Color(0xFFE8F5E9),
+                            textColor: const Color(0xFF4CAF50),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 12.h),
+
+                      // Trend row
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Activity Trend (Jan 13 – Jan 20)',
                               style: TextStyle(
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.bold,
-                                color: const Color(0xFF1A1A1A),
-                              ),
-                            ),
-                            SizedBox(height: 4.h),
-                            Text(
-                              'Member since Jan 2026',
-                              style: TextStyle(
-                                fontSize: 14.sp,
+                                fontSize: 12.sp,
                                 color: const Color(0xFF666666),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      // Edit Button
-                      TextButton(
-                        onPressed: () {
-                          // Handle edit profile
-                        },
-                        child: Text(
-                          'Edit',
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.bold,
-                            color: const Color(0xFF2196F3),
                           ),
-                        ),
+                          Text(
+                            '+12%',
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.bold,
+                              color: const Color(0xFF4CAF50),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
+
                 SizedBox(height: 24.h),
                 // Personal Information Section
                 Text(
@@ -510,4 +560,41 @@ class ProfileTab extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _activityStatCard({
+  required String title,
+  required String value,
+  required Color bgColor,
+  required Color textColor,
+}) {
+  return Expanded(
+    child: Container(
+      height: 90.h, // FIXED HEIGHT = STABLE RENDER
+      padding: EdgeInsets.all(14.w),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(14.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: TextStyle(fontSize: 12.sp, color: textColor),
+          ),
+          SizedBox(height: 6.h),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 22.sp,
+              fontWeight: FontWeight.bold,
+              color: textColor,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
